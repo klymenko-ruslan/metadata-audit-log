@@ -1,0 +1,8 @@
+{
+  "datasource": {
+    "host": "192.99.147.128",
+    "user": "metaserver",
+    "password": "metaserver",
+    "database": "metadata"
+  }
+}

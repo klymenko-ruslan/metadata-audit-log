@@ -37,13 +37,13 @@ function insertRecord(partIds, oldHeader, newHeader, action) {
 }
 function generateDescription(partId, oldHeader, newHeader, action) {
     if(action == 'leave')
-        return 'The part [' + partId + '] migrated from interchange group [' + oldHeader + '] to [' + newHeader + '].';
+        return 'The part [[' + partId + '] - $PART_NUMBER] migrated from interchange group [' + oldHeader + '] to [' + newHeader + '].';
     if(action == 'create')
-        return 'Created interchange: ' + partId  +'.';
+        return 'Created interchange: [' + partId  +'].';
     if(action == 'add')
-        return 'Part ' + partId + " added to the group " + newHeader + " as interchange.";
+        return 'Part [' + partId + "] - $PART_NUMBER added to the part [$PART_ID] - $PART_NUMBER as interchange.";
     if(action == 'addGroup')
-        return 'Part ' + partId + ' and all its interchanges added to the group ' + newHeader + " as interchanges.";
+        return 'Part [' + partId + '] - $PART_NUMBER and all its interchanges[$INTERCHANGES] added to the part [$PART_ID] - $PART_NUMBER as interchanges.';
     throw new Error('Wrong action!');
 }
 

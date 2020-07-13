@@ -10,7 +10,7 @@ var pool = mysql.createPool({
   connectionLimit: 10
 });
 
-function insertRecord(partIds, oldHeader, newHeader) {
+function insertRecord(partIds, oldHeader, newHeader, action) {
     console.log('call' + partIds);
     partIds = (typeof partIds === 'undefined') ? [] : partIds;
     oldHeader = (typeof oldHeader === 'undefined') ? null : oldHeader;
@@ -33,6 +33,18 @@ function insertRecord(partIds, oldHeader, newHeader) {
         });
         con.release();
     });
+    return JSON.stringify(partIds.map(id => { return { 'description' : generateDescription(id, oldHeader, newHeader, action), 'transactionId': generatedUuid}}));
+}
+function generateDescription(partId, oldHeader, newHeader, action) {
+    if(action == 'leave')
+        return 'The part [' + partId + '] migrated from interchange group [' + oldHeader + '] to [' + newHeader + '].';
+    if(action == 'create')
+        return 'Created interchange: ' + partId  +'.';
+    if(action == 'add')
+        return 'Part ' + partId + " added to the group " + newHeader + " as interchange.";
+    if(action == 'addGroup')
+        return 'Part ' + partId + ' and all its interchanges added to the group ' + newHeader + " as interchanges.";
+    throw new Error('Wrong action!');
 }
 
 module.exports.insertRecord = insertRecord;

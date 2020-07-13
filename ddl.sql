@@ -12,3 +12,11 @@ CREATE TABLE `interchange_audit_log` (
   `new_header` BIGINT,
   PRIMARY KEY (`id`)
 );
+
+ALTER TABLE interchange_audit_log
+ADD CONSTRAINT unique_transaction_id UNIQUE (transaction_id);
+
+
+ALTER TABLE interchange_audit_log_transactions ADD CONSTRAINT fk_transaction_id FOREIGN KEY (transaction_id) REFERENCES interchange_audit_log(transaction_id);
+
+ALTER TABLE changelog ADD COLUMN transaction_id VARCHAR(128);

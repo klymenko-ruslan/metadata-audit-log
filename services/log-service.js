@@ -39,7 +39,7 @@ let insertTransaction = async (transactionId, partIds) => {
 
 let getPartNumberById = async (partId) => {
     let con = pool.promise();
-    const [rows,] = await con.query('SELECT manfr_part_num FROM part WHERE id = 1')// + partId);
+    const [rows,] = await con.query(`SELECT manfr_part_num FROM part WHERE id = ${partId}`);
     pool.releaseConnection(con);
     return rows[0].manfr_part_num;
 }
